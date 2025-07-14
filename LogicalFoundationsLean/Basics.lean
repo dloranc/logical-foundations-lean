@@ -110,6 +110,37 @@ example : andb3 Bool.false Bool.true Bool.true = Bool.false := by rfl
 example : andb3 Bool.true Bool.false Bool.true = Bool.false := by rfl
 example : andb3 Bool.true Bool.true Bool.false = Bool.false := by rfl
 
-end MyBool
-
 -- ### Types
+
+#check true
+
+#check (negb Bool.true)
+
+#check negb
+
+-- ### New types from old
+
+inductive rgb : Type where
+  | red
+  | green
+  | blue
+
+inductive color : Type where
+  | black
+  | white
+  | primary (p: rgb)
+
+def monochrome (c: color) : Bool :=
+  match c with
+  | color.black => Bool.true
+  | color.white => Bool.true
+  | color.primary _ => Bool.false
+
+def isRed (c: color) : Bool :=
+  match c with
+  | color.black => Bool.false
+  | color.white => Bool.false
+  | color.primary rgb.red => Bool.true
+  | color.primary _ => Bool.false
+
+end MyBool

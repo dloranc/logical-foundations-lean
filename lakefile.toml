@@ -1,0 +1,10 @@
+name = "logical-foundations-lean"
+version = "0.1.0"
+defaultTargets = ["logical-foundations-lean"]
+
+[[lean_lib]]
+name = "LogicalFoundationsLean"
+
+[[lean_exe]]
+name = "logical-foundations-lean"
+root = "Main"

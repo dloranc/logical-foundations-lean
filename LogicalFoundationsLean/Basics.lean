@@ -276,3 +276,15 @@ def eqb (n m : Nat) : Bool :=
 
 example : eqb 2 2 = true := by rfl
 example : eqb 2 3 = false := by rfl
+
+def leb (n m : Nat) : Bool :=
+  match n with
+  | 0 => true
+  | n' + 1 =>
+    match m with
+    | 0 => false
+    | m' + 1 => leb n' m'
+
+example : leb 2 2 = true := by rfl
+example : leb 2 4 = true := by rfl
+example : leb 4 2 = false := by rfl

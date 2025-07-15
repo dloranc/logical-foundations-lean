@@ -264,3 +264,15 @@ def factorial (n: Nat) : Nat :=
 
 example : factorial 3 = 6 := by rfl
 example : factorial 5 = mult 10 12 := by rfl
+
+def eqb (n m : Nat) : Bool :=
+  match n with
+  | 0 => match m with
+         | 0 => true
+         | _ + 1 => false
+  | n' + 1 => match m with
+            | 0 => false
+            | m' + 1 => eqb n' m'
+
+example : eqb 2 2 = true := by rfl
+example : eqb 2 3 = false := by rfl

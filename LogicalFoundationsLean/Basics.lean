@@ -288,3 +288,11 @@ def leb (n m : Nat) : Bool :=
 example : leb 2 2 = true := by rfl
 example : leb 2 4 = true := by rfl
 example : leb 4 2 = false := by rfl
+
+def ltb (n m: Nat) : Bool :=
+  leb (n + 1) m
+
+example : ltb 2 2 = false := by rfl
+example : ltb 2 4 = true := by rfl
+example : ltb 3 4 = true := by rfl
+example : ltb 4 2 = false := by rfl

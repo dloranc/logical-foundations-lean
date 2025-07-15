@@ -1,6 +1,8 @@
 -- # Basics
 -- Website: https://softwarefoundations.cis.upenn.edu/lf-current/Basics.html
 
+namespace MyBool -- to shadow original Bool
+
 -- ## Data and Functions
 
 -- ### Days of the Week
@@ -31,7 +33,6 @@ def nextWorkingDay (d: Day) : Day :=
 example : nextWorkingDay (nextWorkingDay Day.saturday) = Day.tuesday := by rfl
 
 -- ### Booleans
-namespace MyBool -- to shadow original Bool
 
 inductive Bool : Type where
   | true
@@ -143,4 +144,37 @@ def isRed (c: color) : Bool :=
   | color.primary rgb.red => Bool.true
   | color.primary _ => Bool.false
 
+-- ### Modules
+namespace Playground
+  def foo : rgb := rgb.blue
+end Playground
+
+def foo : Bool := Bool.true
+
+#check Playground.foo
+#check foo
+
 end MyBool
+-- ### Tuples
+namespace TuplePlayground
+
+inductive bit : Type where
+  | b1
+  | b0
+deriving Repr, DecidableEq
+
+inductive nybble : Type where
+  | bits (bit0 bit1 bit2 bit3 : bit)
+deriving Repr, DecidableEq
+
+#check (nybble.bits .b1 .b0 .b1 .b0)
+
+def all_zero (nb: nybble) : Bool :=
+  match nb with
+  | (nybble.bits .b0 .b0 .b0 .b0) => true
+  | (nybble.bits _ _ _ _) => false
+
+#eval all_zero (nybble.bits .b1 .b0 .b1 .b0) -- false
+#eval all_zero (nybble.bits .b0 .b0 .b0 .b0) -- true
+
+end TuplePlayground

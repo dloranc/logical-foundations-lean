@@ -256,3 +256,11 @@ def exp (base power: Nat) : Nat :=
   | n' + 1 => mult base (exp base n')
 
 example : exp 2 4 = 16 := by rfl
+
+def factorial (n: Nat) : Nat :=
+  match n with
+  | 0 => 1
+  | n' + 1 => mult n (factorial n')
+
+example : factorial 3 = 6 := by rfl
+example : factorial 5 = mult 10 12 := by rfl

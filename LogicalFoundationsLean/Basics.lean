@@ -178,3 +178,81 @@ def all_zero (nb: nybble) : Bool :=
 #eval all_zero (nybble.bits .b0 .b0 .b0 .b0) -- true
 
 end TuplePlayground
+
+-- ### Numbers
+namespace NatPlayground
+
+inductive nat : Type where
+  | O
+  | S (n : nat)
+deriving Repr, DecidableEq
+
+def pred (n: nat) : nat :=
+  match n with
+    | .O => .O
+    | .S n' => n'
+
+end NatPlayground
+
+#eval Nat.succ (.succ (.succ (.succ .zero)))
+
+-- Coq style
+def minustwo (n: Nat) : Nat :=
+  match n with
+  | .zero => .zero
+  | .succ .zero => .zero
+  | .succ (.succ n') => n'
+
+-- Lean version - more concise
+def minustwo' (n: Nat) : Nat :=
+  match n with
+  | 0 => 0
+  | 1 => 0
+  | n' + 2 => n'
+
+#eval minustwo 4
+#eval minustwo' 4
+
+def even (n: Nat) : Bool :=
+  match n with
+  | 0 => true
+  | 1 => false
+  | n' + 2 => even n'
+
+def odd (n: Nat) : Bool :=
+  Bool.not (even n)
+
+example : odd 1 = true := by rfl
+example : odd 4 = false := by rfl
+
+def plus (n: Nat) (m: Nat) : Nat :=
+  match n with
+  | 0 => m
+  | n' + 1 => (plus n' m) + 1
+
+#eval plus 2 3
+
+def mult (n m: Nat) : Nat :=
+  match n with
+  | 0 => 0
+  | 1 => m
+  | n' + 1 => plus m (mult n' m)
+
+example : mult 3 3 = 9 := by rfl
+example : mult 2 4 = 8 := by rfl
+
+def minus (n m: Nat) : Nat :=
+  match n, m with
+  | 0, _ => 0
+  | _ + 1, 0 => n
+  | n' + 1, m' + 1 => minus n' m'
+
+example : minus 4 2 = 2 := by rfl
+example : minus 7 3 = 4 := by rfl
+
+def exp (base power: Nat) : Nat :=
+  match power with
+  | 0 => 1
+  | n' + 1 => mult base (exp base n')
+
+example : exp 2 4 = 16 := by rfl

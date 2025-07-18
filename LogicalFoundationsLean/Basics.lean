@@ -296,3 +296,39 @@ example : ltb 2 2 = false := by rfl
 example : ltb 2 4 = true := by rfl
 example : ltb 3 4 = true := by rfl
 example : ltb 4 2 = false := by rfl
+
+theorem plus_O_n : ∀ n: Nat, 0 + n = n := by simp
+
+-- skip plus_O_n' because 'simp' already solves the goal
+
+theorem plus_O_n'' : ∀ n : Nat, 0 + n = n := by
+  intro m
+  simp
+
+theorem plus_1_l : ∀ n : Nat, 1 + n = n.succ := by
+  apply Nat.add_comm -- no idea how to solve it without tactic used later, rfl and simp don't work
+
+theorem mult_0_l : ∀ n : Nat, 0 * n = 0 := by
+  intro n
+  simp
+
+theorem plus_id_example (n m : Nat) (h : n = m) : n + n = m + m := by
+  rw [h]
+
+theorem plus_id_exercise (n m o : Nat) (h1: n = m)  (h2: m = o) : n + m = m + o := by
+  rw [h1]
+  rw [h2]
+
+#check Nat.mul_zero -- mult_n_O from Coq
+#check Nat.mul_add_one -- mult_n_Sm from Coq
+
+theorem mult_n_0_m_0 (p q : Nat) : (p * 0) + (q * 0) = 0 := by
+  intros
+  rw [Nat.mul_zero]
+  rw [Nat.mul_zero]
+
+theorem mult_n_1 (p : Nat) : p * 1 = p := by
+  intros
+  rw [Nat.mul_add_one]
+  rw [Nat.mul_zero]
+  rw [Nat.zero_add] -- or rw [plus_O_n]

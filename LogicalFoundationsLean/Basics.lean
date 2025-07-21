@@ -289,6 +289,9 @@ example : leb 2 2 = true := by rfl
 example : leb 2 4 = true := by rfl
 example : leb 4 2 = false := by rfl
 
+notation:70 x " =? " y => eqb x y
+notation:70 x " <=? " y => leb x y
+
 def ltb (n m: Nat) : Bool :=
   leb (n + 1) m
 

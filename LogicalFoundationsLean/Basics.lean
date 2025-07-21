@@ -339,3 +339,11 @@ theorem mult_n_1 (p : Nat) : p * 1 = p := by
   rw [Nat.mul_add_one]
   rw [Nat.mul_zero]
   rw [Nat.zero_add] -- or rw [plus_O_n]
+
+-- ## Proof by Case Analysis
+
+theorem plus_1_neq_0 (n : Nat) :
+  ((n + 1) =? 0) = false := by
+  cases n with
+  | zero => rfl
+  | succ n' => rfl

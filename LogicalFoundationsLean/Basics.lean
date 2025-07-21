@@ -300,6 +300,8 @@ example : ltb 2 4 = true := by rfl
 example : ltb 3 4 = true := by rfl
 example : ltb 4 2 = false := by rfl
 
+-- ## Proof by Simplification
+
 theorem plus_O_n : ∀ n: Nat, 0 + n = n := by simp
 
 -- skip plus_O_n' because 'simp' already solves the goal
@@ -314,6 +316,8 @@ theorem plus_1_l : ∀ n : Nat, 1 + n = n.succ := by
 theorem mult_0_l : ∀ n : Nat, 0 * n = 0 := by
   intro n
   simp
+
+-- ## Proof by Rewriting
 
 theorem plus_id_example (n m : Nat) (h : n = m) : n + n = m + m := by
   rw [h]

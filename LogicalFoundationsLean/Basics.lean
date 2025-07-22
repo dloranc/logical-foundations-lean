@@ -438,3 +438,17 @@ theorem zero_nbeq_plus_1 (n : Nat) :
   | succ => rfl
 
 end MyBool
+
+-- ### Fixpoints and Structural Recursion (Optional)
+
+-- No idea how to do it, ChatGPT says that the equivalent of this code below
+-- would not be accepted in the Coq.
+def safePred (n : Nat) : Nat :=
+  match n with
+  | 0 => 0
+  | n + 1 => n
+
+def trickyAdd (n m : Nat) : Nat :=
+  match n with
+  | 0 => m
+  | n' + 1 => trickyAdd n' (safePred m)

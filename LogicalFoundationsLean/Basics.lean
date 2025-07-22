@@ -347,3 +347,94 @@ theorem plus_1_neq_0 (n : Nat) :
   cases n with
   | zero => rfl
   | succ n' => rfl
+
+namespace MyBool
+-- I want to recreate boolean definitions and theorems from scratch
+-- similar as much as possible to these from the book
+-- if you want use Lean counterparts you can replace
+-- negb, andb, orb, etc. with not, and, or and other defs
+-- from the standard library
+
+theorem negb_involutive (b : Bool) : negb (negb b) = b := by
+  cases b with
+  | true => rfl
+  | false => rfl
+
+theorem andb_commutative (b c : Bool) : andb b c = andb c b := by
+  intros
+  cases b with
+  | true => cases c with
+    | true => rfl
+    | false => rfl
+  | false => cases c with
+    | true => rfl
+    | false => rfl
+
+end MyBool
+
+-- examples without my own Bool type
+
+theorem not_involutive (b : Bool) : not (not b) = b := by
+  cases b with
+  | true => rfl
+  | false => rfl
+
+theorem and_commutative (b c : Bool) : and b c = and c b := by
+  intros
+  cases b with
+  | true => cases c with
+    | true => rfl
+    | false => rfl
+  | false => cases c with
+    | true => rfl
+    | false => rfl
+
+namespace MyBool
+
+theorem andb3_exchange (b c d: Bool) : andb (andb b c) d = andb (andb b d) c := by
+  intros
+  cases b with
+  | true => cases c with
+    | true => cases d with
+      | true => rfl
+      | false => rfl
+    | false => cases d with
+      | true => rfl
+      | false => rfl
+  | false => cases c with
+    | true => cases d with
+      | true => rfl
+      | false => rfl
+    | false => cases d with
+      | true => rfl
+      | false => rfl
+
+theorem andb_true_elim2 (b c : Bool) (h : andb b c = .true) : c = .true := by
+  cases c with
+    | true =>
+      rfl
+    | false =>
+      -- goal: andb b false = true -> false = true
+      rw [<-h]
+      cases b with
+      | true =>
+        rfl
+      | false =>
+        rfl
+
+theorem plus_1_neq_0' (n : Nat) : ((n + 1) =? 0) = false := by
+  cases n with
+  | zero => rfl
+  | succ => rfl
+
+theorem andb_commutative''
+  (b c: Bool) : andb b c = andb c b := by
+  cases b <;> cases c <;> rfl -- cases b <;> is same as intros [] [] in Coq
+
+theorem zero_nbeq_plus_1 (n : Nat) :
+  (0 =? (n + 1)) = false := by
+  cases n with
+  | zero => rfl
+  | succ => rfl
+
+end MyBool
